@@ -1,3 +1,7 @@
+# Link to Javascript Calculator In Process --> [Javascript Calculator](http://russelltheprogrammer.github.io/javascript-calculator/)
+
+Note: This project was done for the FCC curriculum for the Front End Libraries Certificate so sometimes there are more divs than needed to pass the tests.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
