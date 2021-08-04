@@ -7,15 +7,26 @@ const JavascriptCalculator = () => {
     const [display, setDisplay] = useState(0);
 
     const maxDigitLimit = () => {
-
+        const prevDisplay = display;
+        const MaxDigitMessage = "   Max Digits Allowed";
+        
+        setDisplay(MaxDigitMessage);
+        setTimeout(() => setDisplay(prevDisplay), 500);
+      
     }
 
     const handleNumbers = (e) => {
-        const number = e.target.value;
-        if(display === 0) {
-        return setDisplay(number);
+        if(display.length > 20){
+            maxDigitLimit();
         }
-        return setDisplay(display + number)
+        else {
+            const number = e.target.value;
+            const regex = /^0/g;
+            if(regex.test(display) === true) {
+                return setDisplay(number);
+            }
+                return setDisplay(display + number)
+        }
     }
 
     const handleDecimals = (e) => {
