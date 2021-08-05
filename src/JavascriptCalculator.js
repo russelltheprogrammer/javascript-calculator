@@ -5,15 +5,15 @@ import './index.scss';
 const JavascriptCalculator = () => {
 
     const [display, setDisplay] = useState(0);
+    const [maxDigitMessageDisplay, setMaxDigitMessageDisplay ] = useState(null);
+
 
     const maxDigitLimit = () => {
-        const prevDisplay = display;
         const MaxDigitMessage = "   Max Digits Allowed";
-        
-        setDisplay(MaxDigitMessage);
-        setTimeout(() => setDisplay(prevDisplay), 500);
-      
-    }
+        setMaxDigitMessageDisplay(MaxDigitMessage)
+            setTimeout(() => {setMaxDigitMessageDisplay(null)}, 500)
+
+    };
 
     const handleNumbers = (e) => {
         if(display.length > 20){
@@ -21,19 +21,35 @@ const JavascriptCalculator = () => {
         }
         else {
             const number = e.target.value;
-            const regex = /^0/g;
-            if(regex.test(display) === true) {
+            const regexZero = /^0/g;
+            if(regexZero.test(display) === true) {
                 return setDisplay(number);
             }
                 return setDisplay(display + number)
         }
     }
 
-    const handleDecimals = (e) => {
-
+    const handleOperators = (e) => {
+        if(display.length > 20){
+            maxDigitLimit();
+        }
+        else {
+            const operator = e.target.value;
+            const regexZero = /^0/g;
+            const regexOperator = /[*]|[/]|[+]|[-]/g;
+            if (regexZero.test(display) === true) {
+                return setDisplay(operator);
+            }
+            else if (regexOperator.test(display) === true ){
+                return setDisplay(display);
+            }
+            else {
+                return setDisplay(display + operator)
+            }
+        }
     }
 
-    const handleOperators = (e) => {
+    const handleDecimals = (e) => {
 
     }
 
@@ -47,7 +63,11 @@ const JavascriptCalculator = () => {
         <table className="calculator-container" border="0" align="center" width="100%">
             <tbody>
                 <tr>
-                    <td colSpan="5" id="display">{display}</td>
+                    <td colSpan="5" id="display">
+                        <div>
+                        {maxDigitMessageDisplay === null ? display : maxDigitMessageDisplay}
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td><button id="seven" className="btn btn-secondary" value="7" onClick={handleNumbers}>7</button></td>
