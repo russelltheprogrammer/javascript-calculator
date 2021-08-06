@@ -25,7 +25,7 @@ const JavascriptCalculator = () => {
             if(regexZero.test(display)) {
                 return setDisplay(number);
             }
-                return setDisplay(display.concat(number))
+                return setDisplay(display.concat(number));
         }
     }
 
@@ -44,14 +44,14 @@ const JavascriptCalculator = () => {
                 }
                 else if (regexOperatorTestMoreThanOne.test(display)){
                     if(regexOperatorTestNegative.test(display.concat(operator))){
-                        return display
+                        return display;
                     }
                     else {
-                        return setDisplay(display.concat(operator))
+                        return setDisplay(display.concat(operator));
                     }
                 }
                 else {
-                    return setDisplay(display.concat(operator))
+                    return setDisplay(display.concat(operator));
                 }
         }
     }
