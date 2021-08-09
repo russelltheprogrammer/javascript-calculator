@@ -5,7 +5,11 @@ import JavascriptCalculator from './JavascriptCalculator';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">Javascript Calculator</header>
+      <header className="App-header">
+        <h1>Javascript Calculator</h1>
+        <h5><i>This calculator uses formula/expression logic to compute</i></h5>
+      </header>
+      
       <JavascriptCalculator/>
       <footer className="footer">
         Coded By <a 
