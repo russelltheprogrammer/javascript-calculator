@@ -6,6 +6,7 @@ const JavascriptCalculator = () => {
 
     const [display, setDisplay] = useState(0);
     const [maxDigitMessageDisplay, setMaxDigitMessageDisplay ] = useState(null);
+    const regexZero = /^0/g;
 
 
     const maxDigitLimit = () => {
@@ -16,12 +17,11 @@ const JavascriptCalculator = () => {
     };
 
     const handleNumbers = (e) => {
-        if(display.length > 20){
+        if(display.length > 21){
             maxDigitLimit();
         }
         else {
             const number = e.target.value;
-            const regexZero = /^0/g;
             if(regexZero.test(display)) {
                 return setDisplay(number);
             }
@@ -30,17 +30,15 @@ const JavascriptCalculator = () => {
     }
 
     const handleOperators = (operator) => {
-        if(display.length > 20){
+        if(display.length > 21){
             maxDigitLimit();
         }
         else {
-            const regexZero = /^0/g;
             const regexOperatorTestMoreThanOne = /[*]+$|[/]+$|[+]+$|[-]+$/g;
             const regexOperatorTestNegative = /[/*+]{2,}$|[-]{2,}|[/*+-]{3,}$/g;
         
                 if (regexZero.test(display)) {
-                    return setDisplay(operator) & console.log(display);
-                    
+                    return setDisplay(operator)
                 }
                 else if (regexOperatorTestMoreThanOne.test(display)){
                     if(regexOperatorTestNegative.test(display.concat(operator))){
@@ -57,7 +55,23 @@ const JavascriptCalculator = () => {
     }
 
     const handleDecimals = (e) => {
+        if(display.length > 21){
+            maxDigitLimit();
+        }
+        else {
+            const decimal = e.target.value;
+            const regexDecimal = /[.]{1}$|\d*[.]\d+$/g
 
+            if(regexZero.test(display)) {
+                return setDisplay(decimal);
+            }
+            else if(regexDecimal.test(display)){
+                return display;
+            }
+            else {
+                return setDisplay(display.concat(decimal));
+            }
+        }
     }
 
     const handleEqual = (e) => {
