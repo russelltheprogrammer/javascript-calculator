@@ -7,6 +7,7 @@ const JavascriptCalculator = () => {
     const [display, setDisplay] = useState(0);
     const [maxDigitMessageDisplay, setMaxDigitMessageDisplay ] = useState(null);
     const regexZero = /^0$/g;
+    
 
     const maxDigitLimit = () => {
         const MaxDigitMessage = "   Max Digits Allowed";
@@ -45,10 +46,7 @@ const JavascriptCalculator = () => {
             const regexOperatorTestMoreThanOne = /[*]+$|[/]+$|[+]+$|[-]+$/g;
             const regexOperatorTestNegative = /[/*+]{2,}$|[-]{2,}|[/*+-]{3,}$|[-][/*+]/g;
         
-                if (regexZero.test(display)) {
-                    return setDisplay(operator)
-                }
-                else if (regexOperatorTestMoreThanOne.test(display)){
+                if (regexOperatorTestMoreThanOne.test(display)){
                     if(regexOperatorTestNegative.test(display.concat(operator))){
                         return display;
                     }
@@ -87,11 +85,16 @@ const JavascriptCalculator = () => {
         }
     };
 
-    const handleEqual = () => {
+    const handleEqual = (displayParam) => {
+        const regexOperators = /[/*-+]/g
+        const newStringToUseReplace = displayParam.replace(regexOperators, ",$&")
+        const toBeEvaluated = newStringToUseReplace.split(",");
 
 
 
 
+
+        return setDisplay(toBeEvaluated);
 
     }
 
@@ -119,7 +122,7 @@ const JavascriptCalculator = () => {
                     <td><button id="five" className="btn btn-secondary" value="5" onClick={handleNumbers}>5</button></td>
                     <td><button id="six" className="btn btn-secondary" value="6" onClick={handleNumbers}>6</button></td>
                     <td><button id="multiply" className="btn btn-primary" onClick={() => handleOperators("*")}><i className="fas fa-times"></i></button></td>
-                    <td rowSpan="3"><button id="equal" className="btn btn-success" value="=" onClick={handleEqual}><i className="fas fa-equals"></i></button></td>
+                    <td rowSpan="3"><button id="equal" className="btn btn-success" value="=" onClick={() => handleEqual(display)}><i className="fas fa-equals"></i></button></td>
                 </tr>
                 <tr>
                     <td><button id="one" className="btn btn-secondary" value="1" onClick={handleNumbers}>1</button></td>
