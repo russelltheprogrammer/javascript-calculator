@@ -1,13 +1,12 @@
 import React, { useState } from "react";
+import { evaluate } from 'mathjs';
 import './index.scss';
-
 
 const JavascriptCalculator = () => {
 
     const [display, setDisplay] = useState(0);
     const [maxDigitMessageDisplay, setMaxDigitMessageDisplay ] = useState(null);
     const regexZero = /^0$/g;
-    
 
     const maxDigitLimit = () => {
         const MaxDigitMessage = "   Max Digits Allowed";
@@ -67,7 +66,7 @@ const JavascriptCalculator = () => {
         else {
             const decimal = e.target.value;
             const regexDecimal = /[.]{1}$|\d*[.]\d+$/g
-            const regexDecimalBeforeOperatorWithZero = /(\d+|\d*[/*+-])/g
+            const regexDecimalBeforeOperatorWithZero = /(\d*[/*+-]$)/g
             const regexTwoZerosFollowedByDecimal = /0{2}[.]/g
 
             if(regexZero.test(display)) {
@@ -86,17 +85,9 @@ const JavascriptCalculator = () => {
     };
 
     const handleEqual = (displayParam) => {
-        const regexOperators = /[/*-+]/g
-        const newStringToUseReplace = displayParam.replace(regexOperators, ",$&")
-        const toBeEvaluated = newStringToUseReplace.split(",");
-
-
-
-
-
+        let toBeEvaluated = evaluate(displayParam).toString();
         return setDisplay(toBeEvaluated);
-
-    }
+    };
 
     return ( 
     
@@ -122,7 +113,7 @@ const JavascriptCalculator = () => {
                     <td><button id="five" className="btn btn-secondary" value="5" onClick={handleNumbers}>5</button></td>
                     <td><button id="six" className="btn btn-secondary" value="6" onClick={handleNumbers}>6</button></td>
                     <td><button id="multiply" className="btn btn-primary" onClick={() => handleOperators("*")}><i className="fas fa-times"></i></button></td>
-                    <td rowSpan="3"><button id="equal" className="btn btn-success" value="=" onClick={() => handleEqual(display)}><i className="fas fa-equals"></i></button></td>
+                    <td rowSpan="3"><button id="equals" className="btn btn-success" value="=" onClick={() => handleEqual(display)}>=</button></td>
                 </tr>
                 <tr>
                     <td><button id="one" className="btn btn-secondary" value="1" onClick={handleNumbers}>1</button></td>
@@ -137,12 +128,31 @@ const JavascriptCalculator = () => {
                 </tr>
             </tbody>
         </table>
-        
     </div> 
-
     );
 }
  
 export default JavascriptCalculator;
 
-// when evaluation cannot be completed,  blank / 9 return undefined or 9 / blank return undefined
+// Does not allow 2 operators in a row except if there is a negative -does not pass FCC test
+/* const handleOperators = (operator) => {
+    if(display.length > 21){
+        maxDigitLimit();
+    }
+    else {
+        const regexOperatorTestMoreThanOne = /[*]+$|[/]+$|[+]+$|[-]+$/g;
+        const regexOperatorTestNegative = /[/*+]{2,}$|[-]{2,}|[/*+-]{3,}$|[-][/*+]/g;
+    
+            if (regexOperatorTestMoreThanOne.test(display)){
+                if(regexOperatorTestNegative.test(display.concat(operator))){
+                    return display;
+                }
+                else {
+                    return setDisplay(display.concat(operator));
+                }
+            }
+            else {
+                return setDisplay(display.concat(operator));
+            }
+    }
+}; */

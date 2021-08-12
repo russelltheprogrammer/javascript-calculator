@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Javascript Calculator</h1>
-        <h5><i>This calculator uses formula/expression logic to compute</i></h5>
+        <h5><i>This calculator uses immediate execution logic to compute</i></h5>
       </header>
       
       <JavascriptCalculator/>
