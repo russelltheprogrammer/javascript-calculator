@@ -9,7 +9,6 @@ function App() {
         <h1>Javascript Calculator</h1>
         <h5><i>This calculator uses immediate execution logic to compute</i></h5>
       </header>
-      
       <JavascriptCalculator/>
       <footer className="footer">
         Coded By <a 

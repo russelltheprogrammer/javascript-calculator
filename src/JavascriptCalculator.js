@@ -42,16 +42,21 @@ const JavascriptCalculator = () => {
             maxDigitLimit();
         }
         else {
-            const regexOperatorTestMoreThanOne = /[*]+$|[/]+$|[+]+$|[-]+$/g;
-            const regexOperatorTestNegative = /[/*+]{2,}$|[-]{2,}|[/*+-]{3,}$|[-][/*+]/g;
-        
-                if (regexOperatorTestMoreThanOne.test(display)){
-                    if(regexOperatorTestNegative.test(display.concat(operator))){
-                        return display;
-                    }
-                    else {
-                        return setDisplay(display.concat(operator));
-                    }
+            const regexOperatorTestMoreThanOne = /\d+([*]$|[/]$|[+]$)|(\d+[-]{1}?$)/g;
+            const regexOperatorEndsWithNegative = /\d+[-]{1}?$/g;
+            const regexOperatorMoreThanTwo = /[-/*+]{2}?$/g;
+
+                if(regexZero.test(display)){
+                    return setDisplay("0".concat(operator));
+                }
+                else if (regexOperatorTestMoreThanOne.test(display) && operator !== "-"){
+                    return setDisplay(display.slice(0, -1).concat(operator));
+                }
+                else if (regexOperatorEndsWithNegative.test(display) && operator === "-"){
+                    return setDisplay(display.concat(operator));
+                }
+                else if (regexOperatorMoreThanTwo.test(display)){
+                    return setDisplay(display.slice(0, -2).concat(operator));
                 }
                 else {
                     return setDisplay(display.concat(operator));
@@ -65,9 +70,9 @@ const JavascriptCalculator = () => {
         }
         else {
             const decimal = e.target.value;
-            const regexDecimal = /[.]{1}$|\d*[.]\d+$/g
-            const regexDecimalBeforeOperatorWithZero = /(\d*[/*+-]$)/g
-            const regexTwoZerosFollowedByDecimal = /0{2}[.]/g
+            const regexDecimal = /[.]{1}$|\d*[.]\d+$/g;
+            const regexDecimalBeforeOperatorWithZero = /(\d*[/*+-]$)/g;
+            const regexTwoZerosFollowedByDecimal = /0{2}[.]/g;
 
             if(regexZero.test(display)) {
                 return setDisplay("0".concat(decimal));
@@ -85,8 +90,14 @@ const JavascriptCalculator = () => {
     };
 
     const handleEqual = (displayParam) => {
+        const regexEndsWithOperator = /[/*-+]{1}$/g
+        if(regexEndsWithOperator.test(displayParam)){
+            return display;
+        }
+        else {
         let toBeEvaluated = evaluate(displayParam).toString();
         return setDisplay(toBeEvaluated);
+        }
     };
 
     return ( 
@@ -133,26 +144,3 @@ const JavascriptCalculator = () => {
 }
  
 export default JavascriptCalculator;
-
-// Does not allow 2 operators in a row except if there is a negative -does not pass FCC test
-/* const handleOperators = (operator) => {
-    if(display.length > 21){
-        maxDigitLimit();
-    }
-    else {
-        const regexOperatorTestMoreThanOne = /[*]+$|[/]+$|[+]+$|[-]+$/g;
-        const regexOperatorTestNegative = /[/*+]{2,}$|[-]{2,}|[/*+-]{3,}$|[-][/*+]/g;
-    
-            if (regexOperatorTestMoreThanOne.test(display)){
-                if(regexOperatorTestNegative.test(display.concat(operator))){
-                    return display;
-                }
-                else {
-                    return setDisplay(display.concat(operator));
-                }
-            }
-            else {
-                return setDisplay(display.concat(operator));
-            }
-    }
-}; */
