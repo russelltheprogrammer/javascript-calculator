@@ -1,4 +1,4 @@
-# Link to Javascript Calculator In Process --> [Javascript Calculator](http://russelltheprogrammer.github.io/javascript-calculator/)
+# Link to Javascript Calculator --> [Javascript Calculator](http://russelltheprogrammer.github.io/javascript-calculator/)
 
 Note: This project was done for the FCC curriculum for the Front End Libraries Certificate so sometimes there is extra code needed to pass the tests.
 
